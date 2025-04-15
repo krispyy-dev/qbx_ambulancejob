@@ -280,6 +280,9 @@ CreateThread(function()
         if IsInHospitalBed and CanLeaveBed then
             lib.showTextUI(locale('text.bed_out'))
             while IsInHospitalBed and CanLeaveBed do
+                if not IsEntityPlayingAnim(cache.ped, InBedDict, InBedAnim, 3) then
+                    lib.playAnim(cache.ped, InBedDict, InBedAnim, 8.0, 1.0, -1, 1, 0, false, 0, false)
+                end
                 OnKeyPress(leaveBed)
                 Wait(0)
             end

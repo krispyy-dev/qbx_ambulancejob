@@ -91,6 +91,7 @@ lib.callback.register('hospital:client:UsePainkillers', function()
     then
         OnPainKillers = true
         exports.qbx_medical:DisableDamageEffects()
+        exports['qbx_medical']:ClearCurrentInjuryEffects()
         if painkillerAmount < 3 then
             painkillerAmount += 1
         end
@@ -108,6 +109,17 @@ local function consumePainKiller()
     painkillerAmount = 0
     OnPainKillers = false
     exports.qbx_medical:EnableDamageEffects()
+    local damage = exports['qbx_medical']:getLastDamageInfo()
+    if not damage or not damage.ped then return end
+
+    -- Reapply effects
+    exports['qbx_medical']:checkDamage(
+        damage.ped,
+        damage.boneId,
+        damage.weaponHash,
+        damage.weaponClass,
+        damage.damageDone
+    )
 end
 
 CreateThread(function()

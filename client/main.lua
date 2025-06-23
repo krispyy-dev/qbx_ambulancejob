@@ -104,3 +104,7 @@ function OnKeyPress(cb)
         cb()
     end
 end
+
+exports('IsOnPainkillers', function()
+    return OnPainKillers
+end)
